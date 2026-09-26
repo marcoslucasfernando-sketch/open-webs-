@@ -40,6 +40,17 @@ const handlers = {
       targetAudience: 'Clientes locales que buscan el servicio en su zona',
       strengths,
       weaknesses,
+      designMap: {
+        palette: (reference.colors?.brand || []).slice(0, 3).map((c) => `${c.hex} (${c.family})`),
+        typeScale: (reference.fonts || []).map((f) => f.name).join(' / ') || 'fuentes del sistema',
+        spacing: reference.design?.sectionGaps?.length ? 'secciones con separación medida' : 'no medido',
+        composition: (reference.sections || []).join(' → '),
+        components: (reference.ctas || []).slice(0, 3).map((c) => `Botón "${c}"`),
+        motion: reference.design?.transitions?.length ? 'transiciones presentes' : 'sin motion destacable',
+      },
+      tasteDna: [
+        { trigger: 'Primer pantallazo', decision: reference.conversion?.phone ? 'Teléfono visible arriba' : 'CTA textual en el hero', reason: 'Reducir fricción al contacto', evidence: (reference.ctas || [])[0] || 'n/d', rejected: 'Formulario largo como único canal' },
+      ],
     };
   },
 
@@ -74,6 +85,10 @@ const handlers = {
         'Datos NAP (nombre, dirección, teléfono) consistentes para SEO local',
         'Tiempo de carga bajo: imágenes optimizadas y sin scripts innecesarios',
       ],
+      designDna: [
+        'Claridad sobre densidad: pocas secciones con un único mensaje cada una',
+        'Contacto inmediato sobre formularios largos: teléfono/WhatsApp visibles',
+      ],
     };
   },
 
@@ -94,7 +109,7 @@ const handlers = {
     ];
     const hero = {
       type: 'hero',
-      heading: `${profile.label}${loc}: ${name}`,
+      heading: profile.promise || name,
       subheading: desc || `${t('Te ofrecemos', 'Le ofrecemos')} ${profile.services.slice(0, 2).map(([s]) => s.toLowerCase()).join(' y ')} con un trato cercano y profesional.`,
       cta: { label: cta, href: '/contacto/' },
     };
@@ -159,9 +174,45 @@ const handlers = {
     };
   },
 
+  siteDesign({ business, baseTokens, masterPrompt }) {
+    const variants = ['split', 'centered', 'editorial'];
+    const h = [...String(business.name)].reduce((a, c) => a + c.charCodeAt(0), 0);
+    return {
+      tokens: baseTokens,
+      heroVariant: variants[h % variants.length],
+      css: '',
+      rationale: [
+        `Paleta derivada de la familia dominante del sector con tono propio (${baseTokens.primary}) y contraste AA`,
+        `Pareja tipográfica ${baseTokens.headingFont} / ${baseTokens.bodyFont} acorde al estilo del sector sin repetir la de la competencia`,
+        /tú/.test(String(masterPrompt)) ? 'Composición cercana: frases cortas y CTA visible sin scroll' : 'Composición sobria orientada a la confianza',
+      ],
+    };
+  },
+
+  designReview() {
+    return { score: null, issues: [], fixesCss: '' };
+  },
+
+  figmaImport() {
+    return { tokens: {}, notes: ['Mock: sin acceso a Figma'] };
+  },
+
+  selectImages({ business, candidates }) {
+    const sorted = [...candidates].sort((a, b) => (b.width || 0) * (b.height || 0) - (a.width || 0) * (a.height || 0));
+    const landscape = sorted.find((c) => (c.width || 0) >= (c.height || 0) * 1.2) || sorted[0];
+    const rest = sorted.filter((c) => c !== landscape);
+    return {
+      hero: landscape ? landscape.index : null,
+      about: rest[0] ? rest[0].index : null,
+      gallery: rest.slice(1, 7).map((c) => c.index),
+      alts: Object.fromEntries(candidates.map((c) => [c.index, c.alt || `${business.name}: foto ${c.index + 1}`])),
+      rejected: [],
+    };
+  },
+
   rewriteSection({ text }) {
     const parts = String(text).split(/(?<=[.!?])\s+/).filter(Boolean);
-    return { text: parts.length > 1 ? [...parts.slice(1), parts[0]].join(' ') : `En resumen: ${text}` };
+    return { text: parts.length > 1 ? [...parts.slice(1), parts[0]].join(' ') : text };
   },
 
   outreachEmail({ place, demoUrl, sender }) {

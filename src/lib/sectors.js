@@ -4,7 +4,7 @@ import { normalizeText, slugify } from './util.js';
 // vocabulario del proveedor mock y consultas de búsqueda. Sectores no listados usan el perfil genérico.
 export const SECTORS = [
   {
-    id: 'restaurante', label: 'Restaurante', match: /restaur|tapas|gastro|comida|cocina|bar\b|cafeter|pizzer|asador|guachinche/,
+    id: 'restaurante', promise: 'Cocina de aquí, hecha con tiempo y buen producto', label: 'Restaurante', match: /restaur|tapas|gastro|comida|cocina|bar\b|cafeter|pizzer|asador|guachinche/,
     schema: 'Restaurant', osm: [['amenity', 'restaurant'], ['amenity', 'cafe'], ['amenity', 'bar'], ['amenity', 'fast_food']],
     cta: 'Reservar mesa', family: 'naranja', typography: 'serif',
     services: [
@@ -15,7 +15,7 @@ export const SECTORS = [
     ],
   },
   {
-    id: 'clinica-dental', label: 'Clínica dental', match: /dent|odont|ortodonc/,
+    id: 'clinica-dental', promise: 'Tu sonrisa, cuidada con calma y precisión', label: 'Clínica dental', match: /dent|odont|ortodonc/,
     schema: 'Dentist', osm: [['amenity', 'dentist'], ['healthcare', 'dentist']],
     cta: 'Pedir cita', family: 'azul', typography: 'sans',
     services: [
@@ -27,7 +27,7 @@ export const SECTORS = [
     ],
   },
   {
-    id: 'peluqueria', label: 'Peluquería y estética', match: /pelu|barber|estetic|belleza|salon|uñas|manicur/,
+    id: 'peluqueria', promise: 'Tu estilo, con manos expertas y sin prisas', label: 'Peluquería y estética', match: /pelu|barber|estetic|belleza|salon|uñas|manicur/,
     schema: 'HairSalon', osm: [['shop', 'hairdresser'], ['shop', 'beauty']],
     cta: 'Reservar cita', family: 'magenta', typography: 'display',
     services: [
@@ -38,7 +38,7 @@ export const SECTORS = [
     ],
   },
   {
-    id: 'abogado', label: 'Despacho de abogados', match: /abogad|legal|jurid|despacho|asesor[ií]a|gestor/,
+    id: 'abogado', promise: 'Asesoramiento jurídico claro, cercano y resolutivo', label: 'Despacho de abogados', match: /abogad|legal|jurid|despacho|asesor[ií]a|gestor/,
     schema: 'LegalService', osm: [['office', 'lawyer'], ['office', 'tax_advisor'], ['office', 'accountant']],
     cta: 'Solicitar consulta', family: 'azul', typography: 'serif',
     services: [
@@ -49,7 +49,7 @@ export const SECTORS = [
     ],
   },
   {
-    id: 'reformas', label: 'Reformas e instalaciones', match: /fontan|electric|reforma|instalac|climatiz|carpinter|pintor|construc/,
+    id: 'reformas', promise: 'Reformas bien hechas, en plazo y sin sorpresas', label: 'Reformas e instalaciones', match: /fontan|electric|reforma|instalac|climatiz|carpinter|pintor|construc/,
     schema: 'HomeAndConstructionBusiness', osm: [['craft', 'plumber'], ['craft', 'electrician'], ['craft', 'hvac'], ['craft', 'carpenter'], ['craft', 'painter']],
     cta: 'Pedir presupuesto', family: 'naranja', typography: 'sans',
     services: [
@@ -60,7 +60,7 @@ export const SECTORS = [
     ],
   },
   {
-    id: 'gimnasio', label: 'Gimnasio y fitness', match: /gimnas|fitness|crossfit|yoga|pilates|entrenad/,
+    id: 'gimnasio', promise: 'Entrena mejor, con un plan hecho para ti', label: 'Gimnasio y fitness', match: /gimnas|fitness|crossfit|yoga|pilates|entrenad/,
     schema: 'ExerciseGym', osm: [['leisure', 'fitness_centre'], ['leisure', 'sports_centre']],
     cta: 'Prueba una clase', family: 'rojo', typography: 'display',
     services: [
@@ -71,7 +71,7 @@ export const SECTORS = [
     ],
   },
   {
-    id: 'inmobiliaria', label: 'Inmobiliaria', match: /inmobil|pisos|vivienda|real estate/,
+    id: 'inmobiliaria', promise: 'Tu próxima casa, con acompañamiento de principio a fin', label: 'Inmobiliaria', match: /inmobil|pisos|vivienda|real estate/,
     schema: 'RealEstateAgent', osm: [['office', 'estate_agent']],
     cta: 'Valorar mi vivienda', family: 'verde', typography: 'sans',
     services: [
@@ -82,7 +82,7 @@ export const SECTORS = [
     ],
   },
   {
-    id: 'alojamiento', label: 'Alojamiento turístico', match: /hotel|apartament|alojamiento|hostal|casa rural|villa|bungalow/,
+    id: 'alojamiento', promise: 'Descansa en un lugar con alma, a tu ritmo', label: 'Alojamiento turístico', match: /hotel|apartament|alojamiento|hostal|casa rural|villa|bungalow/,
     schema: 'LodgingBusiness', osm: [['tourism', 'hotel'], ['tourism', 'apartment'], ['tourism', 'guest_house'], ['tourism', 'hostel']],
     cta: 'Consultar disponibilidad', family: 'turquesa', typography: 'serif',
     services: [
@@ -93,7 +93,7 @@ export const SECTORS = [
     ],
   },
   {
-    id: 'taller', label: 'Taller mecánico', match: /taller|mecanic|coche|automo|neumatic/,
+    id: 'taller', promise: 'Tu coche en buenas manos, con diagnóstico honesto', label: 'Taller mecánico', match: /taller|mecanic|coche|automo|neumatic/,
     schema: 'AutoRepair', osm: [['shop', 'car_repair'], ['shop', 'tyres']],
     cta: 'Pedir cita en el taller', family: 'rojo', typography: 'sans',
     services: [
@@ -104,7 +104,7 @@ export const SECTORS = [
     ],
   },
   {
-    id: 'fisioterapia', label: 'Fisioterapia', match: /fisio|osteop|quiropr|rehabilit/,
+    id: 'fisioterapia', promise: 'Muévete sin dolor, con un tratamiento a tu medida', label: 'Fisioterapia', match: /fisio|osteop|quiropr|rehabilit/,
     schema: 'MedicalBusiness', osm: [['healthcare', 'physiotherapist']],
     cta: 'Reservar sesión', family: 'verde', typography: 'sans',
     services: [
@@ -115,7 +115,7 @@ export const SECTORS = [
     ],
   },
   {
-    id: 'veterinario', label: 'Clínica veterinaria', match: /veterin|mascota/,
+    id: 'veterinario', promise: 'Cuidamos de quien más quieres', label: 'Clínica veterinaria', match: /veterin|mascota/,
     schema: 'VeterinaryCare', osm: [['amenity', 'veterinary']],
     cta: 'Pedir cita', family: 'verde', typography: 'sans',
     services: [
@@ -126,7 +126,7 @@ export const SECTORS = [
     ],
   },
   {
-    id: 'tienda', label: 'Comercio local', match: /tienda|boutique|comercio|moda|regalo|floris|librer/,
+    id: 'tienda', promise: 'Piezas elegidas con criterio, a dos pasos de ti', label: 'Comercio local', match: /tienda|boutique|comercio|moda|regalo|floris|librer/,
     schema: 'Store', osm: [['shop', 'clothes'], ['shop', 'gift'], ['shop', 'florist'], ['shop', 'books'], ['shop', 'shoes']],
     cta: 'Visítanos', family: 'violeta', typography: 'display',
     services: [
@@ -144,7 +144,7 @@ export function resolveSector(input) {
   if (found) return found;
   const label = String(input || 'Negocio local').trim();
   return {
-    id: slugify(label), label, match: null, schema: 'LocalBusiness', osm: [],
+    id: slugify(label), label, promise: `${label} de confianza, cerca de ti`, match: null, schema: 'LocalBusiness', osm: [],
     cta: 'Contactar', family: 'azul', typography: 'sans',
     services: [
       [`Servicio principal de ${label.toLowerCase()}`, '[[PENDIENTE: describe tu servicio principal]]'],

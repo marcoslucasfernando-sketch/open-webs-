@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><title>{{name}} · {{sector}} en {{city}}</title>
+<meta name="description" content="{{sector}} en {{city}}: atención profesional y cercana. Contacta con nosotros.">
+<meta name="theme-color" content="#be185d">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue:wght@600&family=Karla&display=swap" rel="stylesheet">
+<style>
+:root{--primary:#be185d;--accent:#6366f1}
+body{font-family:'Karla',sans-serif;color:#1f2937;background:#ffffff;margin:0}
+h1,h2{font-family:'Bebas Neue',serif;color:#be185d}
+.btn{background:#be185d;color:#fff;padding:12px 22px;border-radius:12px;display:inline-block}
+.btn-secondary{background:#6366f1;color:#111}
+.hero{background:linear-gradient(135deg,#be185d,#6366f1);color:#fff;padding:80px 20px}
+footer{background:#111827;color:#e5e7eb}
+</style>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"LocalBusiness","name":"{{name}}"}</script>
+</head><body>
+<header><nav><a href="/">Inicio</a><a href="#services">Servicios</a><a href="#about">Nosotros</a><a href="#contacto">Contacto</a><a class="btn" href="tel:+34928000000">Llamar</a></nav></header>
+<main>
+<section class="hero"><h1>{{sector}} en {{city}}</h1><p>Te atendemos con cercanía: cuéntanos qué buscas y te proponemos una solución clara.</p><a class="btn btn-primary" href="#contacto">Contacta con nosotros</a> <a class="btn btn-secondary" href="#services">Ver servicios</a></section>
+<section id="services" class="section services"><h2>Nuestros servicios</h2><p>Descubre cómo podemos ayudarte. Tú eliges el día y nosotros nos adaptamos a lo que necesitas. Somos un equipo de {{sector}} en {{city}} con experiencia y trato personal. Te atendemos con cercanía: cuéntanos qué buscas y te proponemos una solución clara.</p><a class="btn btn-primary" href="#contacto">Contacta con nosotros</a></section><section id="faq" class="section faq"><h2>Preguntas frecuentes</h2><p>Te atendemos con cercanía: cuéntanos qué buscas y te proponemos una solución clara. Somos un equipo de {{sector}} en {{city}} con experiencia y trato personal. Descubre cómo podemos ayudarte. Tú eliges el día y nosotros nos adaptamos a lo que necesitas.</p><details><summary>¿Cuál es el horario?</summary><p>De lunes a sábado.</p></details><a class="btn btn-primary" href="#contacto">Contacta con nosotros</a></section><section id="about" class="section about"><h2>Sobre nosotros</h2><p>Descubre cómo podemos ayudarte. Tú eliges el día y nosotros nos adaptamos a lo que necesitas. Somos un equipo de {{sector}} en {{city}} con experiencia y trato personal. Te atendemos con cercanía: cuéntanos qué buscas y te proponemos una solución clara.</p><a class="btn btn-primary" href="#contacto">Contacta con nosotros</a></section><section id="features" class="section features"><h2>Por qué elegirnos</h2><p>Te atendemos con cercanía: cuéntanos qué buscas y te proponemos una solución clara. Somos un equipo de {{sector}} en {{city}} con experiencia y trato personal. Te atendemos con cercanía: cuéntanos qué buscas y te proponemos una solución clara.</p><a class="btn btn-primary" href="#contacto">Contacta con nosotros</a></section><section id="gallery" class="section gallery"><h2>Galería de trabajos</h2><p>Descubre cómo podemos ayudarte. Tú eliges el día y nosotros nos adaptamos a lo que necesitas. Somos un equipo de {{sector}} en {{city}} con experiencia y trato personal. Descubre cómo podemos ayudarte. Tú eliges el día y nosotros nos adaptamos a lo que necesitas.</p><a class="btn btn-primary" href="#contacto">Contacta con nosotros</a></section>
+<section id="contacto" class="contact"><h2>Contacto</h2><p>Escríbenos y te respondemos en menos de 24 horas.</p>
+<form action="/enviar" method="post"><input name="nombre" type="text"><input name="email" type="email"><input name="telefono" type="tel"><textarea name="mensaje"></textarea><button type="submit">Enviar mensaje</button></form>
+<iframe src="https://www.google.com/maps/embed?pb=demo"></iframe><a href="https://wa.me/34600000000" class="whatsapp">WhatsApp</a>
+<p><a href="mailto:info@referencia-9.example">info@referencia-9.example</a></p></section>
+</main>
+<footer><p>© {{name}} · <a href="https://instagram.com/demo">Instagram</a></p></footer>
+</body></html>

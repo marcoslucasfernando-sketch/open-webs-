@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><title>{{name}} · {{sector}} en {{city}}</title>
+<meta name="description" content="{{sector}} en {{city}}: atención profesional y cercana. Solicita presupuesto.">
+<meta name="theme-color" content="#0f766e">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&family=Open+Sans&display=swap" rel="stylesheet">
+<style>
+:root{--primary:#0f766e;--accent:#f97316}
+body{font-family:'Open Sans',sans-serif;color:#1f2937;background:#ffffff;margin:0}
+h1,h2{font-family:'Montserrat',serif;color:#0f766e}
+.btn{background:#0f766e;color:#fff;padding:12px 22px;border-radius:5px;display:inline-block}
+.btn-secondary{background:#f97316;color:#111}
+.hero{background:linear-gradient(135deg,#0f766e,#f97316);color:#fff;padding:80px 20px}
+footer{background:#111827;color:#e5e7eb}
+</style>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"LocalBusiness","name":"{{name}}"}</script>
+</head><body>
+<header><nav><a href="/">Inicio</a><a href="#services">Servicios</a><a href="#about">Nosotros</a><a href="#contacto">Contacto</a><a class="btn" href="tel:+34928000000">Llamar</a></nav></header>
+<main>
+<section class="hero"><h1>{{sector}} en {{city}}</h1><p>Descubre cómo podemos ayudarte. Tú eliges el día y nosotros nos adaptamos a lo que necesitas.</p><a class="btn btn-primary" href="#contacto">Solicita presupuesto</a> <a class="btn btn-secondary" href="#services">Llámanos</a></section>
+<section id="services" class="section services"><h2>Nuestros servicios</h2><p>Descubre cómo podemos ayudarte. Tú eliges el día y nosotros nos adaptamos a lo que necesitas. Somos un equipo de {{sector}} en {{city}} con experiencia y trato personal. Descubre cómo podemos ayudarte. Tú eliges el día y nosotros nos adaptamos a lo que necesitas.</p><a class="btn btn-primary" href="#contacto">Solicita presupuesto</a></section><section id="testimonials" class="section testimonials"><h2>Opiniones de clientes</h2><p>Descubre cómo podemos ayudarte. Tú eliges el día y nosotros nos adaptamos a lo que necesitas. Somos un equipo de {{sector}} en {{city}} con experiencia y trato personal. Te atendemos con cercanía: cuéntanos qué buscas y te proponemos una solución clara.</p><blockquote>"Muy buena atención, repetiremos." — Cliente ★★★★★</blockquote><a class="btn btn-primary" href="#contacto">Solicita presupuesto</a></section><section id="gallery" class="section gallery"><h2>Galería de trabajos</h2><p>Descubre cómo podemos ayudarte. Tú eliges el día y nosotros nos adaptamos a lo que necesitas. Somos un equipo de {{sector}} en {{city}} con experiencia y trato personal. Descubre cómo podemos ayudarte. Tú eliges el día y nosotros nos adaptamos a lo que necesitas.</p><a class="btn btn-primary" href="#contacto">Solicita presupuesto</a></section><section id="faq" class="section faq"><h2>Preguntas frecuentes</h2><p>Descubre cómo podemos ayudarte. Tú eliges el día y nosotros nos adaptamos a lo que necesitas. Somos un equipo de {{sector}} en {{city}} con experiencia y trato personal. Descubre cómo podemos ayudarte. Tú eliges el día y nosotros nos adaptamos a lo que necesitas.</p><details><summary>¿Cuál es el horario?</summary><p>De lunes a sábado.</p></details><a class="btn btn-primary" href="#contacto">Solicita presupuesto</a></section><section id="about" class="section about"><h2>Sobre nosotros</h2><p>Te atendemos con cercanía: cuéntanos qué buscas y te proponemos una solución clara. Somos un equipo de {{sector}} en {{city}} con experiencia y trato personal. Te atendemos con cercanía: cuéntanos qué buscas y te proponemos una solución clara.</p><a class="btn btn-primary" href="#contacto">Solicita presupuesto</a></section>
+<section id="contacto" class="contact"><h2>Contacto</h2><p>Escríbenos y te respondemos en menos de 24 horas.</p>
+<form action="/enviar" method="post"><input name="nombre" type="text"><input name="email" type="email"><input name="telefono" type="tel"><textarea name="mensaje"></textarea><button type="submit">Enviar mensaje</button></form>
+<iframe src="https://www.google.com/maps/embed?pb=demo"></iframe>
+<p><a href="mailto:info@referencia-2.example">info@referencia-2.example</a></p></section>
+</main>
+<footer><p>© {{name}} · <a href="https://instagram.com/demo">Instagram</a></p></footer>
+</body></html>

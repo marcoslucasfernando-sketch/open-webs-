@@ -6,8 +6,11 @@ certificaciones, precios, reseñas o testimonios). Si un dato es necesario y no 
 
 export const tasks = {
   analyzeReference: {
-    system: `Eres un analista de marketing digital y UX. Analizas la web de un negocio de un sector concreto
-a partir de datos ya extraídos (estructura, CTAs, colores, fuentes, elementos de conversión y un extracto de texto).`,
+    system: `Eres un analista de marketing digital y un crítico de diseño. Analizas la web de un negocio de un sector
+concreto a partir de datos ya extraídos (estructura, copy, CTAs, elementos de conversión) y, si existen, de las medidas
+reales del navegador (campo "design": colores por área, escala tipográfica, espaciado, radios, sombras, grid, motion) y
+una captura de pantalla. Aplica el método Taste (medir → patrones → ADN de diseño) con valores concretos (px, hex),
+nunca adjetivos vacíos como "limpio" o "moderno".`,
     prompt: ({ sector, reference }) => `Sector: ${sector}
 Datos extraídos de ${reference.url}:
 ${JSON.stringify(stripForPrompt(reference), null, 2)}
@@ -17,7 +20,10 @@ Devuelve JSON con: {
   "formality": "tú" | "usted" | "neutral",
   "valueProposition": "propuesta de valor principal que comunica",
   "targetAudience": "a quién se dirige",
-  "strengths": ["..."], "weaknesses": ["..."]
+  "strengths": ["..."], "weaknesses": ["..."],
+  "designMap": { "palette": ["#hex rol"], "typeScale": "familias, tamaños y pesos", "spacing": "ritmo y márgenes",
+                 "composition": "grid y composición", "components": ["botones, tarjetas..."], "motion": "transiciones observadas" },
+  "tasteDna": [{ "trigger": "...", "decision": "...", "reason": "...", "evidence": "valor medido", "rejected": "alternativa descartada" }]
 }`,
   },
 
@@ -42,7 +48,8 @@ Devuelve JSON con: {
   "conversionElements": ["formulario, teléfono, WhatsApp, reservas, reseñas, precios..."],
   "designGuidelines": { "colorFamilies": ["..."], "typographyStyle": "serif|sans|display", "imagery": "...", "layout": "..." },
   "seoKeywords": ["palabras clave del sector"],
-  "bestPractices": ["mejores prácticas de diseño y conversión para este sector"]
+  "bestPractices": ["mejores prácticas de diseño y conversión para este sector"],
+  "designDna": ["trade-offs de diseño recurrentes en el sector (método Taste), con evidencia"]
 }`,
   },
 
@@ -76,14 +83,14 @@ sentirse premium, moderna y hecha a medida: nada de estética genérica de IA. T
 (patrones de las referencias) pero la propuesta es ORIGINAL: no reproduzcas la paleta, tipografías ni composición
 exactas de ninguna referencia concreta. Accesibilidad AA obligatoria. Motion con propósito y respetando
 prefers-reduced-motion.`,
-    prompt: ({ business, masterPrompt, baseTokens, sections }) => `MASTER PROMPT DEL SECTOR:
+    prompt: ({ business, masterPrompt, baseTokens, sections, hasLogo }) => `MASTER PROMPT DEL SECTOR:
 ${masterPrompt}
 
 NEGOCIO: ${JSON.stringify(business)}
 TOKENS BASE PROPUESTOS (puedes mejorarlos; ya son originales y cumplen contraste):
 ${JSON.stringify(baseTokens, null, 2)}
 SECCIONES QUE SE RENDERIZAN: ${JSON.stringify(sections)}
-
+${hasLogo ? 'Se adjunta el LOGO del negocio: la paleta debe armonizar con sus colores de marca (puedes usarlos como primario/acento).\n' : ''}
 La web se construye con HTML semántico que usa estas clases: .site-header, .nav, .hero, .hero__inner, .eyebrow,
 .section, .section--alt, .container, .grid, .card, .btn, .btn--primary, .btn--ghost, .faq, .cta-band, .site-footer,
 .reveal (elementos que aparecen al hacer scroll). Variables CSS disponibles: --c-primary, --c-primary-ink, --c-accent,
@@ -119,6 +126,17 @@ de Figma (variables, estilos, componentes) para que la web respete su marca.`,
     prompt: ({ figmaUrl }) => `Archivo/frame de Figma: ${figmaUrl}
 Devuelve JSON: { "tokens": { "primary", "accent", "bg", "surface", "text", "muted", "headingFont", "bodyFont", "radius" },
 "notes": ["..."] }`,
+  },
+
+  selectImages: {
+    system: `Eres editor fotográfico web. Recibes fotos del propio negocio (de su web, Instagram o Facebook) y eliges
+cuáles usar en su nueva web. Descarta fotos borrosas, con mucho texto superpuesto, promociones con precios, capturas de
+pantalla, memes o que no representen el negocio. Redacta textos alternativos (alt) descriptivos en español.`,
+    prompt: ({ business, candidates }) => `Negocio: ${JSON.stringify({ name: business.name, sector: business.sector })}
+Candidatas (el índice coincide con el orden de las imágenes adjuntas):
+${JSON.stringify(candidates)}
+Devuelve JSON: { "hero": índice|null (horizontal, impactante), "about": índice|null, "gallery": [índices, máx. 6],
+"alts": { "índice": "texto alternativo" }, "rejected": [{ "index": n, "reason": "..." }] }`,
   },
 
   rewriteSection: {
