@@ -11,8 +11,7 @@
   "scripts": {
     "start": "node src/server.js",
     "dev": "node --watch src/server.js",
-    "test": "node --test test/",
-    "llm:check": "node scripts/llm-check.js",
+    "test": "node --test --test-concurrency=1 test/*.test.js",
     "demo": "node scripts/demo.js",
     "skills:sync": "node scripts/skills-sync.js",
     "skills:check": "node scripts/skills-sync.js --check",
@@ -20,6 +19,7 @@
     "doctor": "node scripts/doctor.js"
   },
   "dependencies": {
-    "cheerio": "^1.2.0"
+    "cheerio": "^1.2.0",
+    "nodemailer": "^10.0.10"
   }
 }

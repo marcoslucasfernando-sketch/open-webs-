@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Open Webs · Panel</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 64 64%22%3E%3Crect width=%2264%22 height=%2264%22 rx=%2214%22 fill=%22%231f4fd8%22/%3E%3Ctext x=%2232%22 y=%2243%22 font-family=%22sans-serif%22 font-size=%2234%22 font-weight=%22700%22 text-anchor=%22middle%22 fill=%22white%22%3EW%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css">
+<link rel="stylesheet" href="/panel.css">
+</head>
+<body>
+<header class="top">
+  <div class="brand">Open Webs <span class="muted">· panel</span></div>
+  <nav class="tabs" role="tablist">
+    <button data-tab="crear" class="active">Crear web</button>
+    <button data-tab="mapa">Prospección Gran Canaria</button>
+    <button data-tab="sectores">Sectores</button>
+    <button data-tab="ajustes">Ajustes</button>
+  </nav>
+  <div id="mode-pill" class="pill"></div>
+</header>
+
+<main>
+  <!-- ============ CREAR WEB ============ -->
+  <section id="tab-crear" class="tab active">
+    <div id="step-form" class="card narrow">
+      <h1>Crea la web de un negocio</h1>
+      <p class="muted">La plataforma investiga 10 webs del sector, genera el master prompt y GPT-6 Luna redacta y diseña una web original.</p>
+      <form id="form-project" class="grid-form">
+        <label>Nombre del negocio*<input name="name" required placeholder="Clínica Dental Atlántico"></label>
+        <label>Sector*<input name="sector" required list="sector-list" placeholder="Clínica dental"></label>
+        <datalist id="sector-list"></datalist>
+        <label>Ubicación<input name="location" placeholder="Las Palmas de Gran Canaria"></label>
+        <label>Teléfono<input name="phone" placeholder="928 000 000"></label>
+        <label class="full">Descripción breve<textarea name="description" rows="3" placeholder="Qué hace el negocio, especialidades, qué lo diferencia…"></textarea></label>
+        <label>Email de contacto<input name="email" type="email"></label>
+        <label>WhatsApp<input name="whatsapp"></label>
+        <label class="full">Dirección<input name="address"></label>
+        <fieldset class="full">
+          <legend>Fotos y logo del negocio (opcional)</legend>
+          <p class="muted small">Se recogen navegando su web, Instagram y Facebook públicos.</p>
+          <div class="grid-form">
+            <label>Web actual<input name="website" placeholder="https://…"></label>
+            <label>Instagram<input name="instagram" placeholder="@usuario"></label>
+            <label class="full">Facebook<input name="facebook" placeholder="https://facebook.com/…"></label>
+          </div>
+        </fieldset>
+        <button class="btn primary full" type="submit">Investigar y generar la web</button>
+      </form>
+      <div id="recent" class="recent"></div>
+    </div>
+
+    <div id="step-progress" class="card narrow hidden">
+      <h2>Generando…</h2>
+      <div class="bar"><span></span></div>
+      <ol id="progress-log" class="log"></ol>
+    </div>
+
+    <div id="step-review" class="review hidden">
+      <div class="preview-col">
+        <div class="preview-bar">
+          <strong id="review-title"></strong>
+          <div class="seg"><button data-vp="desktop" class="active">Escritorio</button><button data-vp="mobile">Móvil</button></div>
+          <a id="preview-open" target="_blank" rel="noopener">Abrir ↗</a>
+        </div>
+        <div class="frame-wrap"><iframe id="preview" title="Vista previa"></iframe></div>
+      </div>
+      <aside class="side">
+        <nav class="subtabs">
+          <button data-sub="contenido" class="active">Contenido</button>
+          <button data-sub="diseno">Diseño</button>
+          <button data-sub="investigacion">Investigación</button>
+          <button data-sub="decisiones">Decisiones</button>
+          <button data-sub="publicar">Publicar</button>
+        </nav>
+        <div id="sub-contenido" class="sub active"></div>
+        <div id="sub-diseno" class="sub"></div>
+        <div id="sub-investigacion" class="sub"></div>
+        <div id="sub-decisiones" class="sub"></div>
+        <div id="sub-publicar" class="sub"></div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ============ MAPA ============ -->
+  <section id="tab-mapa" class="tab">
+    <div class="map-layout">
+      <div class="map-side">
+        <h2>Negocios de Gran Canaria</h2>
+        <p class="muted small">Datos abiertos de OpenStreetMap. Rojo: sin web · Naranja: web caída · Ámbar: web mejorable · Verde: web correcta · Azul: sin analizar.</p>
+        <div id="sector-checks" class="checks"></div>
+        <button id="btn-search" class="btn primary">Buscar negocios</button>
+        <div class="filters">
+          <select id="f-status"><option value="">Todos los estados</option><option value="sin-web">Sin web</option><option value="caida">Web caída</option><option value="mejorable">Web mejorable</option><option value="correcta">Web correcta</option><option value="pendiente">Sin analizar</option></select>
+          <label class="inline"><input type="checkbox" id="f-email"> Solo con email</label>
+        </div>
+        <div class="actions">
+          <label class="inline"><input type="checkbox" id="sel-all"> Seleccionar visibles</label>
+          <button id="btn-enrich" class="btn">Analizar webs</button>
+          <button id="btn-demos" class="btn">Generar demos</button>
+          <button id="btn-campaign" class="btn primary">Preparar emails</button>
+        </div>
+        <div id="lead-count" class="muted small"></div>
+        <ul id="lead-list" class="lead-list"></ul>
+        <div id="map-log" class="log small"></div>
+      </div>
+      <div id="map"></div>
+    </div>
+  </section>
+
+  <!-- ============ SECTORES ============ -->
+  <section id="tab-sectores" class="tab">
+    <div class="card">
+      <h2>Master prompts por sector</h2>
+      <p class="muted">Cada sector se investiga con un mínimo de 10 webs de referencia. El master prompt resultante guía a GPT-6 Luna y se reutiliza para todos los negocios del sector.</p>
+      <form id="form-sector" class="row"><input name="sector" placeholder="Sector" list="sector-list" required><input name="location" placeholder="Zona (opcional)"><label class="inline"><input type="checkbox" name="force"> Reinvestigar</label><button class="btn primary">Investigar</button></form>
+      <div id="sector-list-view"></div>
+      <pre id="master-prompt" class="prompt hidden"></pre>
+    </div>
+  </section>
+
+  <!-- ============ AJUSTES ============ -->
+  <section id="tab-ajustes" class="tab">
+    <div class="cards">
+      <div class="card"><h2>GPT-6 Luna</h2><div id="ai-status"></div><div class="row"><a class="btn primary" href="/auth/llm/start">Conectar proveedor de IA (OAuth)</a><button class="btn" id="btn-llm-off">Desconectar</button></div></div>
+      <div class="card"><h2>Herramientas MCP</h2><div id="mcp-status" class="muted">Pulsa comprobar.</div><div class="row"><button class="btn" id="btn-mcp">Comprobar MCP</button><a class="btn" href="/auth/figma/start">Conectar Figma</a></div></div>
+      <div class="card wide"><h2>Skills de GPT-6 Luna</h2><div id="skills"></div></div>
+      <div class="card wide"><h2>Configuración</h2><pre id="status-json" class="prompt"></pre></div>
+    </div>
+  </section>
+</main>
+
+<dialog id="dlg">
+  <form method="dialog" class="dlg">
+    <div id="dlg-body"></div>
+    <div class="row end"><button class="btn" value="cancel">Cerrar</button></div>
+  </form>
+</dialog>
+
+<script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="/panel.js" type="module"></script>
+</body>
+</html>

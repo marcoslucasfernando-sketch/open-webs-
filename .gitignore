@@ -5,3 +5,4 @@ data/
 .cache/
 skills/vendor/
 .playwright-mcp/
+data-demo/

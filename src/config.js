@@ -98,6 +98,8 @@ export function buildConfig(env = process.env) {
       bbox: (env.LEADS_BBOX || '27.73,-15.84,28.19,-15.35').split(',').map(Number),
       region: env.LEADS_REGION || 'Gran Canaria',
       demoHosting: env.DEMO_HOSTING || 'platform', // platform (/demo/<id>/) | netlify (subdominio *.netlify.app)
+      tileUrl: env.MAP_TILE_URL || 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+      tileAttribution: env.MAP_TILE_ATTRIBUTION || '&copy; colaboradores de OpenStreetMap',
     },
 
     mail: {

@@ -18,6 +18,7 @@ export function headTags(page, spec, ctx) {
     url && `<meta property="og:url" content="${escapeHtml(url)}">`,
     `<meta name="twitter:card" content="summary">`,
     ctx.mode !== 'publish' && `<meta name="robots" content="noindex, nofollow">`,
+    ctx.buildId && `<meta name="generator" content="open-webs ${escapeHtml(ctx.buildId)}">`,
   ]
     .filter(Boolean)
     .join('\n');

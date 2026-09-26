@@ -293,7 +293,7 @@ img,svg{max-width:100%;display:block}
 .hero__actions{display:flex;flex-wrap:wrap;gap:.75rem;margin-top:1.75rem}
 .hero__art svg{width:100%;height:auto;border-radius:28px;box-shadow:0 30px 60px -30px color-mix(in srgb,var(--c-text) 35%,transparent)}
 .hero-centered .hero__inner{grid-template-columns:1fr;text-align:center;justify-items:center}.hero-centered .hero__art{display:none}.hero-centered .lead{margin-inline:auto}.hero-centered .hero__actions{justify-content:center}
-.hero-editorial .hero--home h1{font-size:clamp(2.8rem,1.8rem + 5vw,6.4rem);letter-spacing:-.035em}.hero-editorial .hero--home{border-bottom:1px solid var(--c-line)}
+.hero-editorial .hero--home h1{font-size:clamp(2.6rem,1.6rem + 4.2vw,5.4rem);letter-spacing:-.035em}.hero-editorial .hero--home{border-bottom:1px solid var(--c-line)}
 .hero-fullbleed .hero--home{background:var(--c-primary);color:var(--c-primary-ink)}.hero-fullbleed .hero--home .lead,.hero-fullbleed .hero--home .eyebrow{color:inherit;opacity:.88}.hero-fullbleed .hero--home .btn--primary{background:var(--c-bg);color:var(--c-text)}.hero-fullbleed .hero--home .btn--ghost{color:inherit;border-color:color-mix(in srgb,currentColor 40%,transparent)}
 .section{padding:clamp(3.5rem,7vw,6.5rem) 0}.section--alt{background:var(--c-surface)}
 .section__head{max-width:720px;margin-bottom:clamp(2rem,4vw,3rem)}.section__foot{margin-top:2.5rem}

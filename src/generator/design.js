@@ -88,12 +88,17 @@ export function mergeTokens(base, proposed = {}, refColors = []) {
 // Saneado del CSS generado por la IA: sin @import salvo Google Fonts, sin url() externas, sin expresiones.
 export function sanitizeCss(css = '', maxLen = 8000) {
   let s = String(css).slice(0, maxLen);
-  s = s.replace(/<\/?style[^>]*>/gi, '');
-  s = s.replace(/@import\s+(?:url\()?\s*['"]?(?!https:\/\/fonts\.googleapis\.com\/)[^;]+;/gi, '');
+  s = s.replace(/<\/?style[^>]*>/gi, '').replace(/<\/?script[^>]*>?/gi, '');
+  // Solo se conservan @import de Google Fonts; se apartan antes de neutralizar url() externas.
+  const imports = [];
+  s = s.replace(/@import\s+[^;]+;/gi, (stmt) => {
+    const m = stmt.match(/https:\/\/fonts\.googleapis\.com\/[^'")\s;]+/i);
+    if (m) imports.push(`@import url("${m[0].replace(/"/g, '')}");`);
+    return '';
+  });
   s = s.replace(/url\(\s*['"]?(?!data:image\/svg\+xml)(?!#)[^)]*\)/gi, 'none');
   s = s.replace(/expression\s*\(|javascript:|behavior\s*:|-moz-binding/gi, '');
-  s = s.replace(/<\/?script/gi, '');
-  return s.trim();
+  return [...imports, s.replace(/</g, '').trim()].join('\n').trim();
 }
 
 export function googleFontsHref(tokens) {

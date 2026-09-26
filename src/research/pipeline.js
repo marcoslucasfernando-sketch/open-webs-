@@ -89,7 +89,7 @@ export class ResearchService {
       skipped,
       stats,
       synthesis,
-      masterPrompt: renderMasterPrompt({ sector, location, profile, stats, synthesis, references }),
+      masterPrompt: renderMasterPrompt({ sector, location, profile, stats, synthesis, references, synthetic: this.search.name === 'fixture' }),
       ai: { ...meta, analyses: references.map((r) => r.aiMeta) },
     };
     this.store.put('sectors', key, record);
@@ -182,11 +182,11 @@ export function aggregate(refs) {
   };
 }
 
-export function renderMasterPrompt({ sector, location, profile, stats, synthesis: s, references }) {
+export function renderMasterPrompt({ sector, location, profile, stats, synthesis: s, references, synthetic = false }) {
   const list = (arr) => (arr || []).map((x) => `- ${typeof x === 'string' ? x : JSON.stringify(x)}`).join('\n');
   const pct = (v) => `${Math.round(v * 100)} %`;
   return `# MASTER PROMPT — ${profile.label}${location ? ` · ${location}` : ''}
-Basado en el análisis de ${references.length} webs reales del sector (${stats.measured} medidas con navegador).
+Basado en el análisis de ${references.length} webs ${synthetic ? 'SINTÉTICAS (modo demo)' : 'reales'} del sector (${stats.measured} medidas con navegador).
 Úsalo como guía para generar webs ORIGINALES: extrae patrones, nunca copies textos, logos, fotos ni diseños concretos.
 
 ## Sector
