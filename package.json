@@ -1,0 +1,25 @@
+{
+  "name": "open-webs",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Plataforma SaaS que investiga el sector de un negocio, genera su web y la despliega con dominio propio de forma automática.",
+  "type": "module",
+  "main": "src/server.js",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js",
+    "test": "node --test test/",
+    "llm:check": "node scripts/llm-check.js",
+    "demo": "node scripts/demo.js",
+    "skills:sync": "node scripts/skills-sync.js",
+    "skills:check": "node scripts/skills-sync.js --check",
+    "postinstall": "node scripts/skills-sync.js --if-missing",
+    "doctor": "node scripts/doctor.js"
+  },
+  "dependencies": {
+    "cheerio": "^1.2.0"
+  }
+}

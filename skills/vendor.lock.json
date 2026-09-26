@@ -1,0 +1,74 @@
+{
+  "version": 1,
+  "comment": "Skills de terceros para GPT-6 Luna. Se descargan desde el repositorio ORIGINAL fijado a un commit (npm run skills:sync) y no se redistribuyen en este repo. Para actualizar: cambia 'commit', ejecuta la sincronización y revisa el diff.",
+  "sources": {
+    "anthropic-frontend-design": {
+      "repo": "anthropics/claude-plugins-official",
+      "commit": "fa59bc9037741ecfa131aa27938272605710d7b2",
+      "license": "Apache-2.0",
+      "licenseFile": "plugins/frontend-design/skills/frontend-design/LICENSE.txt",
+      "official": "Plugin oficial de Anthropic (marketplace claude-plugins-official)"
+    },
+    "taste": {
+      "repo": "senlindesign/taste-skill",
+      "commit": "6dce223f2f5665d3636ca9a44ec3a7aa1322a9b8",
+      "license": "MIT (declarado en el README; el repositorio no incluye fichero LICENSE)",
+      "licenseFile": null,
+      "official": "Repositorio del autor (Sen Lin / senlindesign)"
+    },
+    "impeccable": {
+      "repo": "pbakaus/impeccable",
+      "commit": "9d715cc4f5564a990ca8345abfdd5df6dc9b41c8",
+      "license": "Apache-2.0",
+      "licenseFile": "LICENSE",
+      "noticeFile": "NOTICE.md",
+      "official": "Repositorio original de Paul Bakaus (existen forks como forkgitss/pbakaus-impeccable que NO se usan)"
+    },
+    "emil": {
+      "repo": "emilkowalski/skills",
+      "commit": "d16ebe60d09a5ba2afcb7054ede9d0a10c9f6128",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "official": "Repositorio de Emil Kowalski"
+    },
+    "figma": {
+      "repo": "figma/mcp-server-guide",
+      "commit": "38308b7bbc676a9e9d57795ad4793fa9682d1644",
+      "license": "Sin licencia explícita en el repositorio (uso según los términos de Figma)",
+      "licenseFile": null,
+      "official": "Repositorio oficial de Figma para su servidor MCP"
+    }
+  },
+  "skills": [
+    { "name": "frontend-design", "source": "anthropic-frontend-design", "file": "plugins/frontend-design/skills/frontend-design/SKILL.md", "tasks": ["siteDesign", "designReview"], "load": "inject", "priority": 95 },
+
+    { "name": "taste-measure", "source": "taste", "file": "references/step1-measure.md", "tasks": ["analyzeReference"], "load": "inject", "priority": 92 },
+    { "name": "taste-pattern", "source": "taste", "file": "references/step2-pattern.md", "tasks": ["analyzeReference"], "load": "inject", "priority": 91 },
+    { "name": "taste-dna", "source": "taste", "file": "references/step3-taste.md", "tasks": ["analyzeReference", "sectorMasterPrompt"], "load": "inject", "priority": 90 },
+    { "name": "taste-observer", "source": "taste", "file": "references/step4-observer.md", "tasks": ["sectorMasterPrompt"], "load": "tool", "priority": 80 },
+    { "name": "taste", "source": "taste", "file": "SKILL.md", "tasks": ["analyzeReference"], "load": "tool", "priority": 70 },
+    { "name": "taste-extract-js", "source": "taste", "file": "references/extract.js", "kind": "asset" },
+
+    { "name": "impeccable", "source": "impeccable", "file": ".claude/skills/impeccable/SKILL.md", "tasks": ["siteDesign", "designReview"], "load": "inject", "priority": 90 },
+    { "name": "impeccable-typeset", "source": "impeccable", "file": ".claude/skills/impeccable/reference/typeset.md", "tasks": ["siteDesign", "designReview"], "load": "tool", "priority": 75 },
+    { "name": "impeccable-colorize", "source": "impeccable", "file": ".claude/skills/impeccable/reference/colorize.md", "tasks": ["siteDesign"], "load": "tool", "priority": 75 },
+    { "name": "impeccable-layout", "source": "impeccable", "file": ".claude/skills/impeccable/reference/layout.md", "tasks": ["siteDesign", "designReview"], "load": "tool", "priority": 75 },
+    { "name": "impeccable-animate", "source": "impeccable", "file": ".claude/skills/impeccable/reference/animate.md", "tasks": ["siteDesign"], "load": "tool", "priority": 70 },
+    { "name": "impeccable-delight", "source": "impeccable", "file": ".claude/skills/impeccable/reference/delight.md", "tasks": ["siteDesign"], "load": "tool", "priority": 65 },
+    { "name": "impeccable-polish", "source": "impeccable", "file": ".claude/skills/impeccable/reference/polish.md", "tasks": ["designReview"], "load": "tool", "priority": 75 },
+    { "name": "impeccable-critique", "source": "impeccable", "file": ".claude/skills/impeccable/reference/critique.md", "tasks": ["designReview"], "load": "tool", "priority": 75 },
+    { "name": "impeccable-audit", "source": "impeccable", "file": ".claude/skills/impeccable/reference/audit.md", "tasks": ["designReview"], "load": "tool", "priority": 70 },
+    { "name": "impeccable-clarify", "source": "impeccable", "file": ".claude/skills/impeccable/reference/clarify.md", "tasks": ["siteContent"], "load": "tool", "priority": 60 },
+
+    { "name": "emil-design-eng", "source": "emil", "file": "skills/emil-design-eng/SKILL.md", "tasks": ["siteDesign", "designReview"], "load": "tool", "priority": 85 },
+    { "name": "emil-animate", "source": "emil", "file": "skills/animate/SKILL.md", "tasks": ["siteDesign"], "load": "tool", "priority": 80 },
+    { "name": "emil-animation-vocabulary", "source": "emil", "file": "skills/animation-vocabulary/SKILL.md", "tasks": ["siteDesign"], "load": "tool", "priority": 60 },
+    { "name": "emil-review-animations", "source": "emil", "file": "skills/review-animations/SKILL.md", "tasks": ["designReview"], "load": "tool", "priority": 80 },
+    { "name": "emil-find-animation-opportunities", "source": "emil", "file": "skills/find-animation-opportunities/SKILL.md", "tasks": ["designReview"], "load": "tool", "priority": 70 },
+    { "name": "emil-improve-animations", "source": "emil", "file": "skills/improve-animations/SKILL.md", "tasks": ["designReview"], "load": "tool", "priority": 65 },
+
+    { "name": "figma-use", "source": "figma", "file": "skills/figma-use/SKILL.md", "tasks": ["figmaImport"], "load": "tool", "priority": 80, "requires": ["figma"] },
+    { "name": "figma-design-to-code", "source": "figma", "file": "skills/figma-design-to-code/SKILL.md", "tasks": ["figmaImport"], "load": "inject", "priority": 85, "requires": ["figma"] },
+    { "name": "figma-implement-motion", "source": "figma", "file": "skills/figma-implement-motion/SKILL.md", "tasks": ["figmaImport"], "load": "tool", "priority": 60, "requires": ["figma"] }
+  ]
+}
